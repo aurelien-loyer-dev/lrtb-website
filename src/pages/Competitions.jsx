@@ -115,10 +115,9 @@ function Competitions() {
             <tbody>
               {D.standings[division].map(r => {
                 const c = clubById(r.club);
-                const medal = r.rk === 1 ? "🥇" : r.rk === 2 ? "🥈" : r.rk === 3 ? "🥉" : "";
                 return (
                   <tr key={r.rk}>
-                    <td className="rk"><span className="grad">{r.rk}</span> {medal}</td>
+                    <td className="rk"><span className="grad">{r.rk}</span></td>
                     <td style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>{c.name}</td>
                     <td style={{ textAlign: "center" }}>{r.p}</td>
                     <td style={{ textAlign: "center", color: "var(--blue)" }}>{r.w}</td>

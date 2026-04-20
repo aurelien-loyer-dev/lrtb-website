@@ -33,11 +33,6 @@ function Actus() {
               <p style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.6, marginTop: 14 }}>
                 {n.excerpt}
               </p>
-              <a style={{
-                marginTop: 16, display: "inline-block",
-                fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: ".1em",
-                color: "var(--violet)", textDecoration: "none", cursor: "pointer"
-              }}>LIRE L'ARTICLE →</a>
             </div>
           </article>
         ))}

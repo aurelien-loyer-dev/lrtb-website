@@ -1,49 +1,50 @@
 /* LRTB — Home page */
 function Home({ setPage }) {
   const nextComp = React.useMemo(() => {
-    return [...D.competitions].sort((a, b) => (a.date + a.startTime).localeCompare(b.date + b.startTime))
+    return [...D.competitions]
+      .sort((a, b) => (a.date + a.startTime).localeCompare(b.date + b.startTime))
       .find(c => c.date >= "2026-04-20") || D.competitions[0];
   }, []);
   const topStanding = D.standings.senior.slice(0, 3);
+
+  const heroStats = [
+    { n: D.stats.clubs,      label: "clubs affiliés" },
+    { n: D.stats.licensed,   label: "licenciés" },
+    { n: D.stats.referees,   label: "arbitres formés" },
+    { n: D.stats.tournaments, label: "tournois / an" },
+  ];
 
   return (
     <div>
       <section className="hero">
         <div className="hero-inner">
+
           <div className="hero-meta">
-            <div className="left">
-              <span className="index">N° 011 · SAISON 2026</span>
-              <div className="chips">
-                <span className="chip">Ligue officielle</span>
-                <span className="chip">FFTB · affiliée</span>
-                <span className="chip">Depuis 2015</span>
-              </div>
+            <div className="chips">
+              <span className="chip">Ligue officielle</span>
+              <span className="chip">FFTB affiliée</span>
+              <span className="chip">Depuis 2015</span>
             </div>
-            <span className="eyebrow">21° 06′ S · 55° 31′ E</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--muted)", letterSpacing: ".14em" }}>
+              SAISON 2026
+            </span>
           </div>
 
           <h1 className="hero-headline">
             <span className="line">Ligue Réunionnaise</span>
             <span className="line"><span className="italic grad">de Tchoukball.</span></span>
-            <span className="line outline">{D.stats.clubs} clubs · 974.</span>
           </h1>
 
           <div className="hero-bar">
-            <div className="col">
-              <span className="eyebrow">Mission</span>
-              <p>Coordonner, développer et promouvoir le tchoukball sur l'île de la Réunion depuis 2015.</p>
-            </div>
-            <div className="col">
-              <span className="eyebrow">Réseau</span>
-              <p>{D.stats.clubs} clubs affiliés répartis sur les quatre côtes de l'île. {D.stats.licensed} licenciés, {D.stats.referees} arbitres, {D.stats.tournaments} tournois annuels.</p>
-            </div>
-            <div className="col">
-              <span className="eyebrow">Prochain rendez-vous</span>
-              <p><strong>{nextComp.date.split("-").reverse().join(".")}</strong> · {nextComp.title} — {nextComp.location}</p>
-            </div>
+            {heroStats.map(({ n, label }) => (
+              <div className="col hero-stat" key={label}>
+                <div className="hero-stat-n">{n}</div>
+                <span className="eyebrow" style={{ marginTop: 8, display: "block" }}>{label}</span>
+              </div>
+            ))}
             <div className="actions">
-              <button className="btn btn-primary" onClick={() => setPage("competitions")}>Voir les compétitions →</button>
-              <button className="btn btn-ghost" onClick={() => setPage("clubs")}>Les {D.stats.clubs} clubs</button>
+              <button className="btn btn-primary" onClick={() => setPage("competitions")}>Compétitions →</button>
+              <button className="btn btn-ghost" onClick={() => setPage("clubs")}>Les clubs</button>
             </div>
           </div>
 
@@ -53,17 +54,17 @@ function Home({ setPage }) {
             <div className="grain" />
             <div className="overlay">
               <div>
-                <div className="eyebrow" style={{ color: "rgba(255,255,255,.7)" }}>Saison 2026</div>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 22, letterSpacing: "-0.01em", marginTop: 8 }}>
-                  Championnat 974 · en cours
+                <div className="eyebrow" style={{ color: "rgba(255,255,255,.65)" }}>Prochain rendez-vous</div>
+                <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 20, letterSpacing: "-0.01em", marginTop: 8, color: "white" }}>
+                  {nextComp.title}
+                </div>
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "rgba(255,255,255,.55)", marginTop: 6, letterSpacing: ".1em" }}>
+                  {nextComp.date.split("-").reverse().join(".")} · {nextComp.location}
                 </div>
               </div>
-              <div style={{ textAlign: "right", fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: ".15em" }}>
-                {D.stats.clubs} CLUBS<br />{D.stats.licensed} LICENCIÉS<br />1 LIGUE
-              </div>
             </div>
-            <div className="scroll-indicator"><span>SCROLL</span><span className="bar" /></div>
           </div>
+
         </div>
       </section>
 
@@ -75,10 +76,22 @@ function Home({ setPage }) {
           <p>Un réseau structuré, affilié à la Fédération Française de Tchoukball, qui couvre l'ensemble du territoire réunionnais depuis plus d'une décennie.</p>
         </div>
         <div className="values-grid">
-          <div className="value-card"><div className="num">{D.stats.clubs}</div><div><h3>Clubs affiliés</h3><p>Répartis sur les 4 microrégions.</p></div></div>
-          <div className="value-card"><div className="num">{D.stats.licensed}</div><div><h3>Licenciés</h3><p>Saison 2026, tous âges confondus.</p></div></div>
-          <div className="value-card"><div className="num">{D.stats.tournaments}</div><div><h3>Tournois / an</h3><p>Championnat + Open + sélections.</p></div></div>
-          <div className="value-card" style={{ borderRight: "none" }}><div className="num">{D.stats.referees}</div><div><h3>Arbitres formés</h3><p>Brevet régional LRTB.</p></div></div>
+          <div className="value-card">
+            <div className="num">{D.stats.clubs}</div>
+            <div><h3>Clubs affiliés</h3><p>Répartis sur les 4 microrégions.</p></div>
+          </div>
+          <div className="value-card">
+            <div className="num">{D.stats.licensed}</div>
+            <div><h3>Licenciés</h3><p>Saison 2026, tous âges confondus.</p></div>
+          </div>
+          <div className="value-card">
+            <div className="num">{D.stats.tournaments}</div>
+            <div><h3>Tournois / an</h3><p>Championnat + Open + sélections.</p></div>
+          </div>
+          <div className="value-card" style={{ borderRight: "none" }}>
+            <div className="num">{D.stats.referees}</div>
+            <div><h3>Arbitres formés</h3><p>Brevet régional LRTB.</p></div>
+          </div>
         </div>
       </section>
 
@@ -106,7 +119,9 @@ function Home({ setPage }) {
                 <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted)" }}>
                   {s.w}V · {s.d}N · {s.l}D
                 </div>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 24 }}>{s.pts} <span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "var(--font-mono)" }}>PTS</span></div>
+                <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 24 }}>
+                  {s.pts} <span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "var(--font-mono)" }}>PTS</span>
+                </div>
               </div>
             );
           })}
@@ -121,14 +136,17 @@ function Home({ setPage }) {
         <div className="content">
           <div>
             <h2>Affilier <br />votre club ?</h2>
-            <p style={{ marginTop: 24 }}>Votre structure souhaite rejoindre la ligue ? Télécharger le dossier d'affiliation et adressez-le à la LRTB pour la prochaine saison.</p>
+            <p style={{ marginTop: 24 }}>Votre structure souhaite rejoindre la ligue ? Téléchargez le dossier d'affiliation et adressez-le à la LRTB pour la prochaine saison.</p>
             <button className="btn btn-primary" onClick={() => setPage("ressources")}>Dossier d'affiliation →</button>
           </div>
           <div className="side">
             <span className="eyebrow">Dernières actualités</span>
             <ul>
               {D.news.slice(0, 4).map(n => (
-                <li key={n.id}><span>{n.date.split("-").reverse().slice(0, 2).join(".")}</span><span>{n.title}</span></li>
+                <li key={n.id}>
+                  <span>{n.date.split("-").reverse().slice(0, 2).join(".")}</span>
+                  <span>{n.title}</span>
+                </li>
               ))}
             </ul>
           </div>

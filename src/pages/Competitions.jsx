@@ -23,9 +23,9 @@ function Competitions() {
         <p className="sub">Calendrier officiel de la ligue — championnat 974, tournois open, sélections territoriales et entraînements mutualisés des clubs.</p>
       </div>
 
-      <div className="filter-row" style={{ justifyContent: "center", marginBottom: 40 }}>
-        <button className={"filter-chip " + (tab === "calendar" ? "on" : "")} onClick={() => setTab("calendar")}>📅 Calendrier</button>
-        <button className={"filter-chip " + (tab === "standings" ? "on" : "")} onClick={() => setTab("standings")}>🏆 Classements</button>
+      <div className="tab-row">
+        <button className={"tab-btn " + (tab === "calendar" ? "on" : "")} onClick={() => setTab("calendar")}>Calendrier</button>
+        <button className={"tab-btn " + (tab === "standings" ? "on" : "")} onClick={() => setTab("standings")}>Classements</button>
       </div>
 
       {tab === "calendar" && <>
@@ -70,7 +70,7 @@ function Competitions() {
                   <div className="main">
                     <span className={"pill " + a.cat}>{catLabel[a.cat] || a.cat}</span>
                     <h4>{a.title}</h4>
-                    <p>{a.location} · Organisé par <strong>{host.name || "LRTB"}</strong> · {a.categ}</p>
+                    <p>{a.location}{host.name && host.name !== "LRTB" ? ` · ${host.name}` : ""}</p>
                   </div>
                   <div className="meta">
                     <span className="time">{a.startTime} – {a.endTime}</span>

@@ -1,17 +1,37 @@
 /* LRTB — App root */
 function App() {
   const [page, setPage] = React.useState(() => {
-    const stored = localStorage.getItem("lrtb-page");
+    const hash = location.hash.slice(1);
     const valid = D.nav.map(n => n.id);
+    if (valid.includes(hash)) return hash;
+    const stored = localStorage.getItem("lrtb-page");
     return valid.includes(stored) ? stored : "home";
   });
   const [tweaks, setTweaks] = React.useState(TWEAK_DEFAULTS);
   const [tweaksOn, setTweaksOn] = React.useState(false);
 
+  const navigate = React.useCallback((id) => {
+    setPage(id);
+    const valid = D.nav.map(n => n.id);
+    if (!valid.includes(id)) return;
+    const hash = id === "home" ? "" : "#" + id;
+    history.pushState(null, "", hash || location.pathname);
+  }, []);
+
   React.useEffect(() => {
     localStorage.setItem("lrtb-page", page);
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [page]);
+
+  React.useEffect(() => {
+    const onPop = () => {
+      const hash = location.hash.slice(1);
+      const valid = D.nav.map(n => n.id);
+      setPage(valid.includes(hash) ? hash : "home");
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
 
   React.useEffect(() => {
     const handler = (ev) => {
@@ -53,9 +73,9 @@ function App() {
 
   return (
     <div className="shell">
-      <Topbar page={page} setPage={setPage} />
-      <main className="page"><Page setPage={setPage} /></main>
-      <Footer setPage={setPage} />
+      <Topbar page={page} setPage={navigate} />
+      <main className="page" key={page}><Page setPage={navigate} /></main>
+      <Footer setPage={navigate} />
       <TweaksPanel tweaks={tweaks} setTweaks={setTweaks} visible={tweaksOn} />
     </div>
   );

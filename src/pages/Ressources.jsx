@@ -13,9 +13,8 @@ function Ressources() {
       </div>
 
       <div className="filter-row">
-        <span className="label">Catégorie</span>
         {cats.map(c => (
-          <button key={c} className={"filter-chip " + (cat === c ? "on" : "")} onClick={() => setCat(c)}>{c === "all" ? "Tout" : c}</button>
+          <button key={c} className={"filter-chip " + (cat === c ? "on" : "")} onClick={() => setCat(c)}>{c === "all" ? "Tous les documents" : c}</button>
         ))}
       </div>
 

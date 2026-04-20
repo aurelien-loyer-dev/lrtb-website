@@ -14,8 +14,7 @@ function Clubs() {
       </div>
 
       <div className="filter-row">
-        <span className="label">Microrégion</span>
-        {[["all", "Toutes"], ["nord", "Nord"], ["sud", "Sud"], ["est", "Est"], ["ouest", "Ouest"]].map(([k, l]) => (
+        {[["all", "Toutes les régions"], ["nord", "Nord"], ["sud", "Sud"], ["est", "Est"], ["ouest", "Ouest"]].map(([k, l]) => (
           <button key={k} className={"filter-chip " + (side === k ? "on" : "")} onClick={() => setSide(k)}>{l}</button>
         ))}
       </div>

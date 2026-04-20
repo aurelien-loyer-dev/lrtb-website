@@ -21,11 +21,10 @@ function Competitions() {
         <div className="crumb">02 — Saison 2026</div>
         <h1>Compétitions<span style={{ color: "var(--violet)" }}>.</span></h1>
         <p className="sub">Calendrier officiel de la ligue — championnat 974, tournois open, sélections territoriales et entraînements mutualisés des clubs.</p>
-      </div>
-
-      <div className="tab-row">
-        <button className={"tab-btn " + (tab === "calendar" ? "on" : "")} onClick={() => setTab("calendar")}>Calendrier</button>
-        <button className={"tab-btn " + (tab === "standings" ? "on" : "")} onClick={() => setTab("standings")}>Classements</button>
+        <div className="tab-row">
+          <button className={"tab-btn " + (tab === "calendar" ? "on" : "")} onClick={() => setTab("calendar")}>Calendrier</button>
+          <button className={"tab-btn " + (tab === "standings" ? "on" : "")} onClick={() => setTab("standings")}>Classements</button>
+        </div>
       </div>
 
       {tab === "calendar" && <>
@@ -44,8 +43,7 @@ function Competitions() {
           </div>
         </div>
 
-        <div className="filter-row">
-          <span className="label">Filtrer</span>
+        <div className="filter-row filter-row-sticky">
           <button className={"filter-chip " + (cat === "all" ? "on" : "")} onClick={() => setCat("all")}>Tout</button>
           <button className={"filter-chip " + (cat === "tournoi" ? "on" : "")} onClick={() => setCat("tournoi")}>Tournois</button>
           <button className={"filter-chip " + (cat === "championnat" ? "on" : "")} onClick={() => setCat("championnat")}>Championnat</button>
@@ -94,7 +92,6 @@ function Competitions() {
 
       {tab === "standings" && <>
         <div className="filter-row">
-          <span className="label">Division</span>
           <button className={"filter-chip " + (division === "senior" ? "on" : "")} onClick={() => setDivision("senior")}>Senior</button>
           <button className={"filter-chip " + (division === "m18" ? "on" : "")} onClick={() => setDivision("m18")}>M18</button>
         </div>
